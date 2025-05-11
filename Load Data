@@ -20,6 +20,20 @@ def load_data():
     return df
 
 df = load_data()
+# ==========================
+# 📄 Overview Page
+# ==========================
+def show_overview(df):
+    st.title("📄 Dataset Overview")
+    st.subheader("🧾 Sample Data")
+    st.dataframe(df.head(), use_container_width=True)
+
+    st.subheader("📏 Dataset Shape")
+    st.info(f"✅ {df.shape[0]} Rows & {df.shape[1]} Columns")
+
+    st.subheader("❗️ Missing Values")
+    missing = df.isnull().sum()
+    st.bar_chart(missing[missing > 0])
 # -----------------------------
 # Train the model
 # -----------------------------
