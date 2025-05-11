@@ -20,3 +20,12 @@ def load_data():
     return df
 
 df = load_data()
+# -----------------------------
+# Train the model
+# -----------------------------
+features = ['TEMP', 'PRES', 'DEWP', 'WSPM', 'SO2', 'NO2', 'CO', 'O3']
+X = df[features]
+y = df['PM2.5']
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X, y)
+
