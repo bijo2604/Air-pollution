@@ -1,0 +1,22 @@
+%%writefile app.py
+import streamlit as st
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.ensemble import RandomForestRegressor
+
+# -----------------------------
+# Load Data
+# -----------------------------
+@st.cache_data
+def load_data():
+    df = pd.read_csv("PRSA_Data_Dongsi_20130301-20170228.csv")
+    df['datetime'] = pd.to_datetime(df[['year', 'month', 'day', 'hour']])
+    df['PM2.5'].fillna(df['PM2.5'].median(), inplace=True)
+    features = ['TEMP', 'PRES', 'DEWP', 'WSPM', 'SO2', 'NO2', 'CO', 'O3']
+    df[features] = df[features].fillna(df[features].median())
+    df = df[df['PM2.5'] < 500]
+    return df
+
+df = load_data()
